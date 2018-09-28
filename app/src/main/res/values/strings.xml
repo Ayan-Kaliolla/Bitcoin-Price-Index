@@ -4,4 +4,6 @@
     <string name="home">Home</string>
     <string name="history">History</string>
     <string name="conversion">Conversion</string>
+    <string name="date">Updated :</string>
+    <string name="loading_message">Подождите, идёт загрузка данных</string>
 </resources>

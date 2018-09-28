@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
@@ -15,13 +14,15 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerAppCompatActivity;
 import kz.kaliolla.bitcoinpriceindex.module.converter.CurrencyConverterFragment;
 import kz.kaliolla.bitcoinpriceindex.module.home.HomeFragment;
 import kz.kaliolla.bitcoinpriceindex.module.transaction.history.TransactionHistoryFragment;
 
-public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener {
+public class MainActivity extends DaggerAppCompatActivity implements AHBottomNavigation.OnTabSelectedListener{
     private static final String PARAM_CURRENT_FRAGMENT_TAG = "current_fragment_tag";
     private static String currentFragmentTag;
     private static FragmentManager fragmentManager;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     AHBottomNavigation bottomNavigation;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,4 +127,5 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         super.onRestoreInstanceState(savedInstanceState);
         currentFragmentTag = savedInstanceState.getString(PARAM_CURRENT_FRAGMENT_TAG);
     }
+
 }

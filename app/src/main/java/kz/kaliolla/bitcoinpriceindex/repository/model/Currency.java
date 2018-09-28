@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Currency {
     private Time time;
-    private Map<String, BigDecimal> bpi;
+    private Map<String, BpiItem> bpi;
 
     public Time getTime() {
         return time;
@@ -16,11 +16,11 @@ public class Currency {
         this.time = time;
     }
 
-    public Map<String, BigDecimal> getBpi() {
+    public Map<String, BpiItem> getBpi() {
         return bpi;
     }
 
-    public void setBpi(Map<String, BigDecimal> bpi) {
+    public void setBpi(Map<String, BpiItem> bpi) {
         this.bpi = bpi;
     }
 }

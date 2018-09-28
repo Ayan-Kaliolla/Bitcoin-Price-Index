@@ -1,19 +1,16 @@
 package kz.kaliolla.bitcoinpriceindex;
-import android.app.Application;
 
-import kz.kaliolla.bitcoinpriceindex.di.AppComponents;
-import kz.kaliolla.bitcoinpriceindex.di.DaggerAppComponents;
 
-public class App extends Application {
-    private AppComponents appComponents;
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+import kz.kaliolla.bitcoinpriceindex.di.AppComponent;
+import kz.kaliolla.bitcoinpriceindex.di.DaggerAppComponent;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        appComponents = DaggerAppComponents.create();
-    }
 
-    public AppComponents getAppComponents() {
-        return appComponents;
+public class App extends DaggerApplication {
+
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
+        return appComponent;
     }
 }

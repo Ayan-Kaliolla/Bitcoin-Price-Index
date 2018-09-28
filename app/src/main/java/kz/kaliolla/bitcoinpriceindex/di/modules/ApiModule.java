@@ -16,8 +16,8 @@ import static kz.kaliolla.bitcoinpriceindex.Constants.RATE_API_BASE_URL;
 import static kz.kaliolla.bitcoinpriceindex.Constants.TRANSACTION_HISTORY_API_BASE_URL;
 
 @Module
-public class NetworkModule {
-    private static final String TAG = NetworkModule.class.getName();
+public class ApiModule {
+    private static final String TAG = ApiModule.class.getName();
 
     @Provides
     @Singleton
@@ -30,7 +30,6 @@ public class NetworkModule {
                 .build()
                 .create(RateApi.class);
     }
-
 
     @Provides
     @Singleton
