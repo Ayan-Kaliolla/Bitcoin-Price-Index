@@ -1,5 +1,6 @@
 package kz.kaliolla.bitcoinpriceindex.module.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +13,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -44,10 +53,13 @@ public class HomeFragment extends DaggerFragment implements AdapterView.OnItemSe
     TextView updateDate;
     @BindView(R.id.currencyValue)
     TextView currencyValue;
+    @BindView(R.id.chart)
+    LineChart chart;
 
     private static final String PARAM_ON_LOADING = "loading_data";
     private boolean rotation = false;
     private boolean loadingData = false;
+    private LineDataSet dataSet = new LineDataSet(new ArrayList<Entry>(), "Label");;
 
     @Nullable
     @Override
@@ -143,4 +155,24 @@ public class HomeFragment extends DaggerFragment implements AdapterView.OnItemSe
         DialogUtil.hideProgressDialog();
     }
 
+    private List<Entry> getMockChartData(){
+        List<Entry> entries = new ArrayList<Entry>();
+        Random random = new Random();
+        for (int i = 0; i < 100 ; i++) {
+            entries.add(new Entry(i, random.nextFloat() * 1000));
+        }
+        return entries;
+    }
+
+    private void initChartConfig(){
+        dataSet.setColor(Color.WHITE);
+        dataSet.setValueTextColor(Color.RED);
+    }
+
+    public void refreshChart(List<Entry> entries){
+        dataSet.setValues(entries);
+        LineData lineData = new LineData(dataSet);
+        chart.setData(lineData);
+        chart.invalidate(); // refresh
+    }
 }
