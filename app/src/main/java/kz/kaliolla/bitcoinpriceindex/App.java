@@ -8,9 +8,18 @@ import kz.kaliolla.bitcoinpriceindex.di.DaggerAppComponent;
 
 
 public class App extends DaggerApplication {
+    private String currency;
 
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
         return appComponent;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

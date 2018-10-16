@@ -1,6 +1,11 @@
 package kz.kaliolla.bitcoinpriceindex.module.home;
 
-import java.util.List;
+
+import android.support.annotation.NonNull;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -10,64 +15,74 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import kz.kaliolla.bitcoinpriceindex.net.RateApi;
-import kz.kaliolla.bitcoinpriceindex.net.TransactionHistoryApi;
 import kz.kaliolla.bitcoinpriceindex.repository.model.Currency;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Transaction;
+import kz.kaliolla.bitcoinpriceindex.repository.model.CurrencyHistory;
 
-public class HomePresenterImpl implements HomePresenter{
+public class HomePresenterImpl implements HomePresenter {
     private Disposable disposable;
     private RateApi rateApi;
     private HomeView view;
-    private TransactionHistoryApi transactionHistoryApi;
-    private String time;
+
+    private Observer subscriber = new Observer() {
+        @Override
+        public void onSubscribe(Disposable d) {
+            disposable = d;
+        }
+
+        @Override
+        public void onNext(Object data) {
+            if (data != null) {
+                if (data instanceof Currency) {
+                    view.setCurrency((Currency) data);
+                } else if (data instanceof CurrencyHistory) {
+                    view.setCurrencyHistory((CurrencyHistory) data);
+                }
+            } else {
+                onError(new NullPointerException("error server response null"));
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            view.showError(e.getMessage());
+            view.hideLoading();
+        }
+
+        @Override
+        public void onComplete() {
+            view.hideLoading();
+        }
+    };
 
     @Inject
-    public HomePresenterImpl(HomeView view, RateApi api, TransactionHistoryApi transactionHistoryApi){
+    public HomePresenterImpl(HomeView view, RateApi api) {
         this.view = view;
         this.rateApi = api;
-        this.transactionHistoryApi = transactionHistoryApi;
     }
 
     @Override
-    public void getRate(String currency) {
+    public void getRate(String currency, Date start, Date end) {
         view.showLoading();
-        String pair = CurrencyPair.getPair(currency);
-        Observable<List<Transaction>> transactions;
-        if(time != null){
-            transactions = transactionHistoryApi.getTransactions(pair, time);
-        } else {
-            transactions = transactionHistoryApi.getTransactions(pair, time);
-        }
-        rateApi.getCurrentRate(currency)
+        //get pair
+//        String pair = CurrencyPair.getPair(currency);
+        String startDate = getFormattedDate(start, "yyyy-MM-dd");
+        String endDate = getFormattedDate(end, "yyyy-MM-dd");
+        Observable.merge(rateApi.getCurrentRate(currency).subscribeOn(Schedulers.io()), rateApi.getRateHistory(currency, startDate, endDate).subscribeOn(Schedulers.io()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Currency>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        disposable = d;
-                    }
+                .subscribe(subscriber);
 
-                    @Override
-                    public void onNext(Currency currency) {
-                        view.setCurrency(currency);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        view.showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        view.hideLoading();
-                    }
-                });
     }
 
     @Override
-    public void onDetach(){
-        if (disposable != null) {
+    public void onDetach() {
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
+    }
+
+    private String getFormattedDate(@NonNull Date date, @NonNull String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.US);
+        return formatter.format(date);
     }
 }

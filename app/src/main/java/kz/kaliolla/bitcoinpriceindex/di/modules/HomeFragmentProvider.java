@@ -8,5 +8,5 @@ import kz.kaliolla.bitcoinpriceindex.module.home.HomeFragment;
 public abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector(modules = HomeFragmentModule.class)
-    abstract HomeFragment provideDetailFragmentFactory();
+    abstract HomeFragment provideHomeFragment();
 }

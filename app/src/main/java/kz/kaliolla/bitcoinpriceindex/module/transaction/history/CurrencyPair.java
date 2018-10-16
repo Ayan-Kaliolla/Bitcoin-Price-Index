@@ -1,4 +1,4 @@
-package kz.kaliolla.bitcoinpriceindex.module.home;
+package kz.kaliolla.bitcoinpriceindex.module.transaction.history;
 
 class CurrencyPair {
     public static String getPair(String currency) {

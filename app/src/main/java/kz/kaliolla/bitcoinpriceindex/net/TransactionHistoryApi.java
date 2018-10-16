@@ -13,13 +13,13 @@ public interface TransactionHistoryApi {
     /**
      * @param currency Supported values for currency_pair: btcusd, btceur, eurusd, xrpusd, xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd, bcheur, bchbtc
      **/
-    @GET("api/v2/transactions/{currency_pair}")
+    @GET("transactions/{currency_pair}")
     Observable<List<Transaction>> getTransactions(@Path("currency_pair") String currency);
 
     /**
      * @param currency Supported values for currency_pair: btcusd, btceur, eurusd, xrpusd, xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd, bcheur, bchbtc
      * @param time     The time interval from which we want the transactions to be returned. Possible values are minute, hour (default) or day.
      **/
-    @GET("api/v2/transactions/{currency_pair}")
+    @GET("transactions/{currency_pair}")
     Observable<List<Transaction>> getTransactions(@Path("currency_pair") String currency, @Query("time") String time);
 }

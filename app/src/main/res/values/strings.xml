@@ -6,4 +6,9 @@
     <string name="conversion">Conversion</string>
     <string name="date">Updated :</string>
     <string name="loading_message">Подождите, идёт загрузка данных</string>
+    <string name="week">неделя</string>
+    <string name="month">месяц</string>
+    <string name="year">год</string>
+    <string name="tid">id</string>
+    <string name="amount">amount</string>
 </resources>
