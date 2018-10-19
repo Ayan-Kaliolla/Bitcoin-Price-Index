@@ -14,13 +14,13 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import kz.kaliolla.bitcoinpriceindex.net.RateApi;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Currency;
-import kz.kaliolla.bitcoinpriceindex.repository.model.CurrencyHistory;
+import kz.kaliolla.bitcoinpriceindex.net.CurrencyRateApi;
+import kz.kaliolla.bitcoinpriceindex.net.model.Currency;
+import kz.kaliolla.bitcoinpriceindex.net.model.CurrencyHistory;
 
 public class HomePresenterImpl implements HomePresenter {
     private Disposable disposable;
-    private RateApi rateApi;
+    private CurrencyRateApi currencyRateApi;
     private HomeView view;
 
     private Observer subscriber = new Observer() {
@@ -55,9 +55,9 @@ public class HomePresenterImpl implements HomePresenter {
     };
 
     @Inject
-    public HomePresenterImpl(HomeView view, RateApi api) {
+    public HomePresenterImpl(HomeView view, CurrencyRateApi api) {
         this.view = view;
-        this.rateApi = api;
+        this.currencyRateApi = api;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class HomePresenterImpl implements HomePresenter {
 //        String pair = CurrencyPair.getPair(currency);
         String startDate = getFormattedDate(start, "yyyy-MM-dd");
         String endDate = getFormattedDate(end, "yyyy-MM-dd");
-        Observable.merge(rateApi.getCurrentRate(currency).subscribeOn(Schedulers.io()), rateApi.getRateHistory(currency, startDate, endDate).subscribeOn(Schedulers.io()))
+        Observable.merge(currencyRateApi.getCurrentRate(currency).subscribeOn(Schedulers.io()), currencyRateApi.getRateHistory(currency, startDate, endDate).subscribeOn(Schedulers.io()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

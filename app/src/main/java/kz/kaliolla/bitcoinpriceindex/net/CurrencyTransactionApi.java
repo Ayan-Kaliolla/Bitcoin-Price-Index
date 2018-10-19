@@ -3,12 +3,12 @@ package kz.kaliolla.bitcoinpriceindex.net;
 import java.util.List;
 
 import io.reactivex.Observable;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Transaction;
+import kz.kaliolla.bitcoinpriceindex.net.model.Transaction;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface TransactionHistoryApi {
+public interface CurrencyTransactionApi {
 
     /**
      * @param currency Supported values for currency_pair: btcusd, btceur, eurusd, xrpusd, xrpeur, xrpbtc, ltcusd, ltceur, ltcbtc, ethusd, etheur, ethbtc, bchusd, bcheur, bchbtc
@@ -22,4 +22,6 @@ public interface TransactionHistoryApi {
      **/
     @GET("transactions/{currency_pair}")
     Observable<List<Transaction>> getTransactions(@Path("currency_pair") String currency, @Query("time") String time);
+
+
 }

@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,13 +21,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.android.support.DaggerFragment;
 import kz.kaliolla.bitcoinpriceindex.App;
 import kz.kaliolla.bitcoinpriceindex.R;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Transaction;
-import kz.kaliolla.bitcoinpriceindex.util.DialogUtil;
+import kz.kaliolla.bitcoinpriceindex.module.BaseDaggerFragment;
+import kz.kaliolla.bitcoinpriceindex.net.model.Transaction;
 
-public class TransactionHistoryFragment extends DaggerFragment implements TransactionHistoryView {
+public class TransactionHistoryFragment extends BaseDaggerFragment implements TransactionHistoryView {
     public static final String TAG = TransactionHistoryFragment.class.getName();
     @Inject
     TransactionPresenter transactionPresenter;
@@ -94,21 +92,6 @@ public class TransactionHistoryFragment extends DaggerFragment implements Transa
         adapter.setTransactions(transactions);
         adapter.notifyDataSetChanged();
         vTransactions.scrollToPosition(0);
-    }
-
-    @Override
-    public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showLoading() {
-        DialogUtil.showProgressDialog(getActivity(), getString(R.string.loading_message));
-    }
-
-    @Override
-    public void hideLoading() {
-        DialogUtil.hideProgressDialog();
     }
 
     @Override

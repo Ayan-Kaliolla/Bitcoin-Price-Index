@@ -1,4 +1,4 @@
-package kz.kaliolla.bitcoinpriceindex.repository.model;
+package kz.kaliolla.bitcoinpriceindex.net.model;
 
 import com.google.gson.annotations.SerializedName;
 

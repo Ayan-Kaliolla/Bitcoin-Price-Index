@@ -7,7 +7,7 @@ import kz.kaliolla.bitcoinpriceindex.module.transaction.history.TransactionHisto
 import kz.kaliolla.bitcoinpriceindex.module.transaction.history.TransactionHistoryView;
 import kz.kaliolla.bitcoinpriceindex.module.transaction.history.TransactionPresenter;
 import kz.kaliolla.bitcoinpriceindex.module.transaction.history.TransactionPresenterImpl;
-import kz.kaliolla.bitcoinpriceindex.net.TransactionHistoryApi;
+import kz.kaliolla.bitcoinpriceindex.net.CurrencyTransactionApi;
 
 @Module
 public class TransactionFragmentModule {
@@ -18,7 +18,7 @@ public class TransactionFragmentModule {
     }
 
     @Provides
-    TransactionPresenter provideHomeFragmentPresenter(TransactionHistoryView view, TransactionHistoryApi api){
+    TransactionPresenter provideHomeFragmentPresenter(TransactionHistoryView view, CurrencyTransactionApi api){
         return new TransactionPresenterImpl(view, api);
     }
 }

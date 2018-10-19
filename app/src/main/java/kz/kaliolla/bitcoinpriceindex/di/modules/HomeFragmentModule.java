@@ -6,8 +6,7 @@ import kz.kaliolla.bitcoinpriceindex.module.home.HomeFragment;
 import kz.kaliolla.bitcoinpriceindex.module.home.HomePresenter;
 import kz.kaliolla.bitcoinpriceindex.module.home.HomePresenterImpl;
 import kz.kaliolla.bitcoinpriceindex.module.home.HomeView;
-import kz.kaliolla.bitcoinpriceindex.net.RateApi;
-import kz.kaliolla.bitcoinpriceindex.net.TransactionHistoryApi;
+import kz.kaliolla.bitcoinpriceindex.net.CurrencyRateApi;
 
 @Module
 public class HomeFragmentModule {
@@ -18,7 +17,7 @@ public class HomeFragmentModule {
     }
 
     @Provides
-    HomePresenter provideHomeFragmentPresenter(HomeView view, RateApi api){
+    HomePresenter provideHomeFragmentPresenter(HomeView view, CurrencyRateApi api){
         return new HomePresenterImpl(view, api);
     }
 }

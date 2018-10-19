@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import kz.kaliolla.bitcoinpriceindex.R;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Transaction;
+import kz.kaliolla.bitcoinpriceindex.net.model.Transaction;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
     private List<Transaction> transactions;

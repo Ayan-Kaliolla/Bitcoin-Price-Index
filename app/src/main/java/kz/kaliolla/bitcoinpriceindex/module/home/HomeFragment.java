@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import java.math.BigDecimal;
@@ -25,20 +24,19 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dagger.android.support.DaggerFragment;
 import kz.kaliolla.bitcoinpriceindex.App;
 import kz.kaliolla.bitcoinpriceindex.R;
-import kz.kaliolla.bitcoinpriceindex.repository.model.BpiItem;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Currency;
-import kz.kaliolla.bitcoinpriceindex.repository.model.CurrencyHistory;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Time;
-import kz.kaliolla.bitcoinpriceindex.util.DialogUtil;
+import kz.kaliolla.bitcoinpriceindex.module.BaseDaggerFragment;
+import kz.kaliolla.bitcoinpriceindex.net.model.BpiItem;
+import kz.kaliolla.bitcoinpriceindex.net.model.Currency;
+import kz.kaliolla.bitcoinpriceindex.net.model.CurrencyHistory;
+import kz.kaliolla.bitcoinpriceindex.net.model.Time;
 import kz.kaliolla.bitcoinpriceindex.view.SelectableChart;
 
 import static kz.kaliolla.bitcoinpriceindex.Constants.THE_NUMBER_OF_VALUES_AFTER_THE_POINT;
 
 
-public class HomeFragment extends DaggerFragment implements AdapterView.OnItemSelectedListener, HomeView {
+public class HomeFragment extends BaseDaggerFragment implements AdapterView.OnItemSelectedListener, HomeView {
     public static final String TAG = HomeFragment.class.getName();
 
     public static Fragment getInstance() {
@@ -139,21 +137,6 @@ public class HomeFragment extends DaggerFragment implements AdapterView.OnItemSe
         if (updatedTime != null) {
             updateDate.setText(updatedTime.getUpdated());
         }
-    }
-
-    @Override
-    public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showLoading() {
-        DialogUtil.showProgressDialog(getActivity(), getString(R.string.loading_message));
-    }
-
-    @Override
-    public void hideLoading() {
-        DialogUtil.hideProgressDialog();
     }
 
 }

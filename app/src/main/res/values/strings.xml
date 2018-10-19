@@ -11,4 +11,7 @@
     <string name="year">год</string>
     <string name="tid">id</string>
     <string name="amount">amount</string>
+    <string name="convert_vs">to</string>
+    <string name="convert">convert</string>
+    <string name="empty_error">Поле не может быть пустым</string>
 </resources>

@@ -1,9 +1,8 @@
-package kz.kaliolla.bitcoinpriceindex.repository.model;
+package kz.kaliolla.bitcoinpriceindex.net.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 
 public class Transaction {
     @SerializedName("tid")

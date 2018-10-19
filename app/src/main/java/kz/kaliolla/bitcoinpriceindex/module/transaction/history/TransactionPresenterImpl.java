@@ -7,24 +7,24 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import kz.kaliolla.bitcoinpriceindex.net.TransactionHistoryApi;
-import kz.kaliolla.bitcoinpriceindex.repository.model.Transaction;
+import kz.kaliolla.bitcoinpriceindex.net.CurrencyTransactionApi;
+import kz.kaliolla.bitcoinpriceindex.net.model.Transaction;
 
 public class TransactionPresenterImpl implements TransactionPresenter {
     private Disposable disposable;
-    private TransactionHistoryApi transactionApi;
+    private CurrencyTransactionApi currencyTransactionApi;
     private TransactionHistoryView view;
 
-    public TransactionPresenterImpl(TransactionHistoryView view, TransactionHistoryApi api) {
+    public TransactionPresenterImpl(TransactionHistoryView view, CurrencyTransactionApi api) {
         this.view = view;
-        this.transactionApi = api;
+        this.currencyTransactionApi = api;
     }
 
     @Override
     public void loadTransaction(String currency) {
         view.showLoading();
         String pair = CurrencyPair.getPair(currency);
-        transactionApi.getTransactions(pair, "day")
+        currencyTransactionApi.getTransactions(pair, "day")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Transaction>>() {

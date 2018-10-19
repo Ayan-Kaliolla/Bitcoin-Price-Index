@@ -1,7 +1,6 @@
-package kz.kaliolla.bitcoinpriceindex.repository.model;
+package kz.kaliolla.bitcoinpriceindex.net.model;
 
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 public class Currency {

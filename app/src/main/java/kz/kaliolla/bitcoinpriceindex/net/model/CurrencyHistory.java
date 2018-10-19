@@ -1,4 +1,4 @@
-package kz.kaliolla.bitcoinpriceindex.repository.model;
+package kz.kaliolla.bitcoinpriceindex.net.model;
 
 import java.util.Map;
 
