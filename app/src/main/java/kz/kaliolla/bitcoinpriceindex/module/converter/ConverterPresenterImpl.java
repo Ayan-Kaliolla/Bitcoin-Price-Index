@@ -3,6 +3,7 @@ package kz.kaliolla.bitcoinpriceindex.module.converter;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,9 +23,9 @@ public class ConverterPresenterImpl implements ConverterPresenter {
     }
 
     @Override
-    public void convert(@NonNull final BigDecimal amount, @NonNull String currency) {
+    public void convert(@NonNull final BigDecimal amount, @NonNull final String currency_label) {
         view.showLoading();
-        api.getCurrentRate(currency)
+        api.getCurrentRate(currency_label)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Currency>() {
@@ -35,8 +36,8 @@ public class ConverterPresenterImpl implements ConverterPresenter {
 
                     @Override
                     public void onNext(Currency currency) {
-                        float rate = currency.getBpi().get(currency).getRateF();
-                        view.setConvertValue(amount.intValue() == 1 ? new BigDecimal(rate) : null, amount.divide(new BigDecimal(rate)));
+                        float rate = currency.getBpi().get(currency_label).getRateF();
+                        view.setConvertValue(amount.intValue() == 1 ? new BigDecimal(rate) : null, amount.divide(new BigDecimal(rate), 4, RoundingMode.HALF_EVEN));
                     }
 
                     @Override

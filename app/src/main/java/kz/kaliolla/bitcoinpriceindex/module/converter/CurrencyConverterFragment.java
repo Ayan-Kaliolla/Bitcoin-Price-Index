@@ -68,10 +68,10 @@ public class CurrencyConverterFragment extends BaseDaggerFragment implements Con
 
     @Override
     public void setConvertValue(@Nullable BigDecimal sell, @NonNull BigDecimal buy) {
-        if (buy != null) {
-            this.buy.setText(buy.toString());
+        if (sell != null) {
+            this.buy.setText(sell.toString());
         } else {
-            this.sell.setText(sell.toString());
+            this.sell.setText(buy.toString());
         }
     }
 
